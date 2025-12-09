@@ -29,7 +29,8 @@
             font-family: 'Cairo', sans-serif;
             background-color: var(--bg-main);
             color: var(--text-main);
-            padding-bottom: 120px;
+            /* مساحة أمان سفلية */
+            padding-bottom: 110px;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
@@ -38,9 +39,9 @@
 
         /* --- Header --- */
         header {
-            background: rgba(15, 17, 21, 0.9);
+            background: rgba(15, 17, 21, 0.95);
             backdrop-filter: blur(10px);
-            padding: 15px 20px;
+            padding: 12px 20px;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -52,27 +53,26 @@
         .brand {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 15px;
+            gap: 10px;
+            margin-bottom: 10px;
         }
 
-        /* اللوجو */
         .logo-icon {
-            width: 42px;
-            height: 42px;
+            width: 38px;
+            height: 38px;
             background: rgba(214, 140, 69, 0.15);
-            border-radius: 12px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--primary);
             border: 1px solid rgba(214, 140, 69, 0.3);
         }
-        .logo-icon svg { width: 24px; height: 24px; fill: currentColor; }
+        .logo-icon svg { width: 22px; height: 22px; fill: currentColor; }
 
         .brand h1 {
             font-weight: 800;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             color: var(--primary);
             line-height: 1;
         }
@@ -80,40 +80,40 @@
         .app-desc {
             background: linear-gradient(90deg, rgba(214, 140, 69, 0.08) 0%, rgba(255,255,255,0.02) 100%);
             border: 1px solid rgba(214, 140, 69, 0.15);
-            border-right: 4px solid var(--primary);
+            border-right: 3px solid var(--primary);
             border-radius: var(--radius-md);
-            padding: 12px;
-            font-size: 0.85rem;
+            padding: 10px;
+            font-size: 0.8rem;
             color: #ddd;
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
-        /* --- Trip Info --- */
-        .container { max-width: 800px; margin: 0 auto; padding: 0 20px; flex: 1; }
+        /* --- Trip Info (تم التصغير) --- */
+        .container { max-width: 800px; margin: 0 auto; padding: 0 15px; flex: 1; }
 
         .info-card {
             background: var(--bg-card);
             border-radius: var(--radius-lg);
-            padding: 15px;
-            margin-top: 20px;
+            padding: 12px; /* تصغير الحشوة */
+            margin-top: 15px;
             border: 1px solid rgba(255,255,255,0.05);
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 8px; /* تقليل المسافة بين المربعات */
         }
 
-        .input-group { display: flex; flex-direction: column; gap: 6px; }
+        .input-group { display: flex; flex-direction: column; gap: 4px; }
         .input-group.full { grid-column: span 2; }
-        .input-group label { font-size: 0.75rem; color: var(--primary); font-weight: 700; }
+        .input-group label { font-size: 0.7rem; color: var(--primary); font-weight: 700; }
 
         .styled-input {
             background: rgba(0,0,0,0.3);
             border: 1px solid rgba(255,255,255,0.1);
             color: white;
-            padding: 10px;
-            border-radius: var(--radius-md);
+            padding: 8px; /* تصغير ارتفاع الخانة */
+            border-radius: 8px;
             font-family: inherit;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             outline: none;
             width: 100%;
         }
@@ -121,103 +121,100 @@
 
         /* --- Filters --- */
         .filters {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0;
         }
         select {
             background: var(--bg-card); color: white; border: 1px solid rgba(255,255,255,0.1);
-            padding: 10px; border-radius: var(--radius-md); width: 100%; font-family: inherit; font-size: 0.9rem;
+            padding: 8px; border-radius: 8px; width: 100%; font-family: inherit; font-size: 0.85rem;
         }
 
         /* --- Progress --- */
-        .progress-box { margin-bottom: 20px; }
-        .progress-track { background: #2A2E37; height: 8px; border-radius: 4px; overflow: hidden; }
+        .progress-box { margin-bottom: 15px; }
+        .progress-track { background: #2A2E37; height: 6px; border-radius: 3px; overflow: hidden; }
         .progress-fill {
             background: var(--primary); height: 100%; width: 0%; transition: width 0.3s;
             box-shadow: 0 0 10px var(--primary-glow);
         }
-        .stats { display: flex; justify-content: space-between; margin-top: 5px; font-size: 0.8rem; color: var(--text-sec); }
+        .stats { display: flex; justify-content: space-between; margin-top: 4px; font-size: 0.75rem; color: var(--text-sec); }
 
         /* --- List Items --- */
         .category-card {
-            background: var(--bg-card); border-radius: var(--radius-lg); padding: 15px;
-            margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.03);
+            background: var(--bg-card); border-radius: var(--radius-lg); padding: 12px;
+            margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.03);
         }
-        .cat-title { color: var(--primary); font-weight: 700; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; }
+        .cat-title { color: var(--primary); font-weight: 700; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; font-size: 0.95rem; }
 
         .item {
-            display: flex; align-items: center; padding: 12px 10px; margin-bottom: 8px;
-            background: rgba(255,255,255,0.02); border-radius: var(--radius-md); cursor: pointer;
+            display: flex; align-items: center; padding: 10px 8px; margin-bottom: 6px;
+            background: rgba(255,255,255,0.02); border-radius: 8px; cursor: pointer;
             transition: 0.2s;
         }
         .item.checked { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); }
         .item.checked span { text-decoration: line-through; color: #6B7280; }
 
         .checkbox {
-            width: 22px; height: 22px; border: 2px solid #555; border-radius: 6px; margin-left: 12px;
+            width: 20px; height: 20px; border: 2px solid #555; border-radius: 5px; margin-left: 10px;
             display: flex; align-items: center; justify-content: center; flex-shrink: 0;
         }
         .item.checked .checkbox { background: var(--success); border-color: var(--success); }
-        .item.checked .checkbox::after { content: '✓'; color: white; font-size: 14px; font-weight: bold; }
+        .item.checked .checkbox::after { content: '✓'; color: white; font-size: 12px; font-weight: bold; }
+        .item span { font-size: 0.9rem; }
 
         .del-btn { color: var(--danger); padding: 5px 10px; font-size: 1.2rem; margin-right: auto; }
 
-        /* --- Footer Styles --- */
+        /* --- Footer --- */
         .app-footer {
             text-align: center;
-            padding: 20px 0 30px 0;
+            padding: 10px 0 20px 0;
             margin-top: auto;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--text-sec);
             opacity: 0.8;
         }
-        .app-footer a {
-            color: var(--text-main);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        .app-footer a:hover {
-            color: var(--primary);
-        }
-        .app-footer a::after {
-            content: ''; position: absolute; width: 0; height: 1px; bottom: -2px; left: 0;
-            background-color: var(--primary); transition: width 0.3s;
-        }
-        .app-footer a:hover::after { width: 100%; }
+        .app-footer a { color: var(--text-main); text-decoration: none; font-weight: 600; }
 
-
-        /* --- Bottom Bar --- */
+        /* --- Bottom Bar (تم التصغير والضغط) --- */
         .bottom-bar {
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-            width: 94%; max-width: 500px;
-            background: rgba(20, 22, 28, 0.95); backdrop-filter: blur(15px);
-            padding: 10px; border-radius: 50px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            display: flex; gap: 8px; z-index: 200; align-items: center;
+            position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%);
+            width: 92%; max-width: 450px; /* تقليل العرض الأقصى */
+            background: rgba(20, 22, 28, 0.96); backdrop-filter: blur(15px);
+            padding: 6px 10px; /* تقليل الحواف الداخلية */
+            border-radius: 100px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+            display: flex; gap: 6px; z-index: 200; align-items: center;
             border: 1px solid rgba(255,255,255,0.1);
         }
 
         .add-input {
-            flex: 1; background: transparent; border: none; color: white; padding: 0 15px; font-family: inherit; font-size: 1rem;
+            flex: 1; background: transparent; border: none; color: white;
+            padding: 0 10px; font-family: inherit; font-size: 0.9rem; /* تصغير الخط */
         }
         .add-input:focus { outline: none; }
 
+        /* تصغير الأزرار */
         .btn {
-            width: 42px; height: 42px; border-radius: 50%; border: none; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0; font-size: 1.2rem;
+            width: 36px; height: 36px; /* تصغير الحجم */
+            border-radius: 50%; border: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            color: white; flex-shrink: 0; font-size: 1rem;
             transition: transform 0.1s;
         }
+        .btn svg { width: 18px; height: 18px; } /* تصغير الأيقونات */
         .btn:active { transform: scale(0.9); }
+
         .btn-add { background: var(--primary); }
         .btn-wa { background: var(--whatsapp); }
         .btn-copy { background: #333; }
-        .btn-reset { background: rgba(239, 68, 68, 0.2); color: var(--danger); width: 38px; height: 38px; font-size: 1rem;}
+        .btn-reset { background: rgba(239, 68, 68, 0.15); color: var(--danger); width: 34px; height: 34px; }
+        .btn-reset svg { width: 16px; height: 16px; }
+
+        .divider { width: 1px; height: 18px; background: rgba(255,255,255,0.15); margin: 0 2px; }
 
         .toast {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            background: var(--success); color: white; padding: 15px 25px; border-radius: 30px;
+            background: var(--success); color: white; padding: 12px 20px; border-radius: 20px;
             display: none; z-index: 300; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -263,7 +260,6 @@
             <option value="lunch">🥘 غداء/عشاء</option>
             <option value="sleep">⛺ مبيت كامل</option>
         </select>
-        <!-- تم تغيير الترتيب هنا: الشتاء أولاً -->
         <select id="weatherType" onchange="app.render()">
             <option value="winter">❄️ شتاء (برد)</option>
             <option value="fair">الجو: معتدل</option>
@@ -287,12 +283,16 @@
 <div class="bottom-bar">
     <input type="text" id="customInput" class="add-input" placeholder="أضف غرض...">
     <button class="btn btn-add" onclick="app.addCustom()">+</button>
-    <div style="width:1px;height:20px;background:#ffffff30"></div>
+    <div class="divider"></div>
     <button class="btn btn-wa" onclick="app.shareWhatsApp()">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
     </button>
-    <button class="btn btn-copy" onclick="app.copyList()">📋</button>
-    <button class="btn btn-reset" onclick="app.reset()">↺</button>
+    <button class="btn btn-copy" onclick="app.copyList()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+    </button>
+    <button class="btn btn-reset" onclick="app.reset()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+    </button>
 </div>
 
 <div id="toast" class="toast"></div>
@@ -410,15 +410,10 @@
 
         reset: function() {
             if(confirm('تصفير القائمة والبدء من جديد؟')) {
-                // 1. تصفير الحالة
                 this.state.checked = [];
-
-                // 2. تصفير الحقول (الإصلاح المطلوب)
                 document.getElementById('tripDate').value = '';
                 document.getElementById('tripTime').value = '';
                 document.getElementById('tripLoc').value = '';
-
-                // 3. إعادة الرسم والحفظ (سيحفظ القيم الفارغة)
                 this.render();
                 this.save();
             }
