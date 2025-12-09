@@ -29,7 +29,6 @@
             font-family: 'Cairo', sans-serif;
             background-color: var(--bg-main);
             color: var(--text-main);
-            /* مساحة أمان سفلية */
             padding-bottom: 110px;
             overflow-x: hidden;
             display: flex;
@@ -88,36 +87,62 @@
             line-height: 1.5;
         }
 
-        /* --- Trip Info (تم التصغير) --- */
+        /* --- Trip Info (تم حل مشكلة التداخل هنا) --- */
         .container { max-width: 800px; margin: 0 auto; padding: 0 15px; flex: 1; }
 
         .info-card {
             background: var(--bg-card);
             border-radius: var(--radius-lg);
-            padding: 12px; /* تصغير الحشوة */
+            padding: 15px 12px;
             margin-top: 15px;
             border: 1px solid rgba(255,255,255,0.05);
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px; /* تقليل المسافة بين المربعات */
+            /* الكود السحري لمنع التداخل: minmax(0, 1fr) */
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
         }
 
-        .input-group { display: flex; flex-direction: column; gap: 4px; }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-width: 0; /* ضروري لعدم خروج المحتوى عن الإطار */
+        }
+
+        /* هذا يجعل خانة الموقع تأخذ العرض الكامل */
         .input-group.full { grid-column: span 2; }
-        .input-group label { font-size: 0.7rem; color: var(--primary); font-weight: 700; }
+
+        .input-group label {
+            font-size: 0.75rem;
+            color: var(--primary);
+            font-weight: 700;
+            white-space: nowrap; /* يمنع نزول النص لسطر ثاني */
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
         .styled-input {
             background: rgba(0,0,0,0.3);
             border: 1px solid rgba(255,255,255,0.1);
             color: white;
-            padding: 8px; /* تصغير ارتفاع الخانة */
+            padding: 0 10px; /* استخدام padding أفقي فقط */
             border-radius: 8px;
             font-family: inherit;
             font-size: 0.85rem;
             outline: none;
             width: 100%;
+            height: 40px; /* ارتفاع ثابت لجميع الخانات */
+            line-height: 40px;
         }
         .styled-input:focus { border-color: var(--primary); }
+
+        /* تحسين خاص لمدخلات التاريخ والوقت في الآيفون */
+        input[type="date"], input[type="time"] {
+            display: block;
+            -webkit-appearance: none;
+            appearance: none;
+            min-height: 40px;
+        }
 
         /* --- Filters --- */
         .filters {
@@ -125,7 +150,7 @@
         }
         select {
             background: var(--bg-card); color: white; border: 1px solid rgba(255,255,255,0.1);
-            padding: 8px; border-radius: 8px; width: 100%; font-family: inherit; font-size: 0.85rem;
+            padding: 0 10px; border-radius: 8px; width: 100%; font-family: inherit; font-size: 0.85rem; height: 40px;
         }
 
         /* --- Progress --- */
@@ -173,12 +198,12 @@
         }
         .app-footer a { color: var(--text-main); text-decoration: none; font-weight: 600; }
 
-        /* --- Bottom Bar (تم التصغير والضغط) --- */
+        /* --- Bottom Bar --- */
         .bottom-bar {
             position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%);
-            width: 92%; max-width: 450px; /* تقليل العرض الأقصى */
+            width: 92%; max-width: 450px;
             background: rgba(20, 22, 28, 0.96); backdrop-filter: blur(15px);
-            padding: 6px 10px; /* تقليل الحواف الداخلية */
+            padding: 6px 10px;
             border-radius: 100px;
             box-shadow: 0 8px 30px rgba(0,0,0,0.6);
             display: flex; gap: 6px; z-index: 200; align-items: center;
@@ -187,19 +212,18 @@
 
         .add-input {
             flex: 1; background: transparent; border: none; color: white;
-            padding: 0 10px; font-family: inherit; font-size: 0.9rem; /* تصغير الخط */
+            padding: 0 10px; font-family: inherit; font-size: 0.9rem;
         }
         .add-input:focus { outline: none; }
 
-        /* تصغير الأزرار */
         .btn {
-            width: 36px; height: 36px; /* تصغير الحجم */
+            width: 36px; height: 36px;
             border-radius: 50%; border: none; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
             color: white; flex-shrink: 0; font-size: 1rem;
             transition: transform 0.1s;
         }
-        .btn svg { width: 18px; height: 18px; } /* تصغير الأيقونات */
+        .btn svg { width: 18px; height: 18px; }
         .btn:active { transform: scale(0.9); }
 
         .btn-add { background: var(--primary); }
