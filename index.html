@@ -29,8 +29,11 @@
             font-family: 'Cairo', sans-serif;
             background-color: var(--bg-main);
             color: var(--text-main);
-            padding-bottom: 100px;
+            padding-bottom: 120px;
             overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         /* --- Header --- */
@@ -86,7 +89,7 @@
         }
 
         /* --- Trip Info --- */
-        .container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+        .container { max-width: 800px; margin: 0 auto; padding: 0 20px; flex: 1; }
 
         .info-card {
             background: var(--bg-card);
@@ -157,6 +160,32 @@
         .item.checked .checkbox::after { content: '✓'; color: white; font-size: 14px; font-weight: bold; }
 
         .del-btn { color: var(--danger); padding: 5px 10px; font-size: 1.2rem; margin-right: auto; }
+
+        /* --- Footer Styles --- */
+        .app-footer {
+            text-align: center;
+            padding: 20px 0 30px 0;
+            margin-top: auto;
+            font-size: 0.8rem;
+            color: var(--text-sec);
+            opacity: 0.8;
+        }
+        .app-footer a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .app-footer a:hover {
+            color: var(--primary);
+        }
+        .app-footer a::after {
+            content: ''; position: absolute; width: 0; height: 1px; bottom: -2px; left: 0;
+            background-color: var(--primary); transition: width 0.3s;
+        }
+        .app-footer a:hover::after { width: 100%; }
+
 
         /* --- Bottom Bar --- */
         .bottom-bar {
@@ -234,9 +263,10 @@
             <option value="lunch">🥘 غداء/عشاء</option>
             <option value="sleep">⛺ مبيت كامل</option>
         </select>
+        <!-- تم تغيير الترتيب هنا: الشتاء أولاً -->
         <select id="weatherType" onchange="app.render()">
-            <option value="fair">الجو: معتدل</option>
             <option value="winter">❄️ شتاء (برد)</option>
+            <option value="fair">الجو: معتدل</option>
         </select>
     </div>
 
@@ -247,6 +277,11 @@
 
     <div id="gridContainer"></div>
 </div>
+
+<!-- الحقوق (Footer) -->
+<footer class="app-footer">
+    Developed by <a href="https://www.olosolutions.cc/" target="_blank">Olo Solution</a>
+</footer>
 
 <!-- Bottom Bar -->
 <div class="bottom-bar">
@@ -315,16 +350,13 @@
         state: { checked: [], custom: [] },
 
         init: function() {
-            // استخدام مفتاح جديد تماماً لضمان عدم تعارض البيانات القديمة
             const saved = localStorage.getItem('zihab_v3');
             if (saved) this.state = JSON.parse(saved);
 
-            // استرجاع المدخلات
             if(localStorage.getItem('z3_date')) document.getElementById('tripDate').value = localStorage.getItem('z3_date');
             if(localStorage.getItem('z3_time')) document.getElementById('tripTime').value = localStorage.getItem('z3_time');
             if(localStorage.getItem('z3_loc')) document.getElementById('tripLoc').value = localStorage.getItem('z3_loc');
 
-            // استرجاع الفلاتر
             if(localStorage.getItem('z3_type')) document.getElementById('tripType').value = localStorage.getItem('z3_type');
             if(localStorage.getItem('z3_weather')) document.getElementById('weatherType').value = localStorage.getItem('z3_weather');
 
@@ -336,30 +368,20 @@
         },
 
         save: function() {
-            // حفظ الحالة (نحول كل شيء لنصوص لضمان الأمان)
             localStorage.setItem('zihab_v3', JSON.stringify(this.state));
-
-            // حفظ المدخلات
             localStorage.setItem('z3_date', document.getElementById('tripDate').value);
             localStorage.setItem('z3_time', document.getElementById('tripTime').value);
             localStorage.setItem('z3_loc', document.getElementById('tripLoc').value);
             localStorage.setItem('z3_type', document.getElementById('tripType').value);
             localStorage.setItem('z3_weather', document.getElementById('weatherType').value);
-
             this.updateProgress();
         },
 
-        // الدالة الأهم: التعامل مع المعرفات كنصوص دائماً لتجنب خطأ النسخ
         toggle: function(id) {
-            const strId = String(id); // تحويل إجباري لنص
+            const strId = String(id);
             const index = this.state.checked.indexOf(strId);
-
-            if (index === -1) {
-                this.state.checked.push(strId);
-            } else {
-                this.state.checked.splice(index, 1);
-            }
-
+            if (index === -1) this.state.checked.push(strId);
+            else this.state.checked.splice(index, 1);
             this.render();
             this.save();
         },
@@ -368,7 +390,6 @@
             const input = document.getElementById('customInput');
             const val = input.value.trim();
             if (!val) return;
-            // معرف فريد نصي
             const newItem = { id: 'c_' + Date.now(), name: val, cat: 'custom', tags: ['all'] };
             this.state.custom.push(newItem);
             input.value = '';
@@ -389,7 +410,15 @@
 
         reset: function() {
             if(confirm('تصفير القائمة والبدء من جديد؟')) {
+                // 1. تصفير الحالة
                 this.state.checked = [];
+
+                // 2. تصفير الحقول (الإصلاح المطلوب)
+                document.getElementById('tripDate').value = '';
+                document.getElementById('tripTime').value = '';
+                document.getElementById('tripLoc').value = '';
+
+                // 3. إعادة الرسم والحفظ (سيحفظ القيم الفارغة)
                 this.render();
                 this.save();
             }
@@ -413,36 +442,24 @@
             const container = document.getElementById('gridContainer');
             container.innerHTML = '';
             const items = this.getVisibleItems();
-
-            // تجميع العناصر حسب الفئة
             const groups = {};
-            items.forEach(item => {
-                if (!groups[item.cat]) groups[item.cat] = [];
-                groups[item.cat].push(item);
-            });
-
+            items.forEach(item => { if (!groups[item.cat]) groups[item.cat] = []; groups[item.cat].push(item); });
             const order = ['coffee', 'cooking', 'grill', 'sleep', 'hygiene', 'car', 'winter', 'custom'];
 
             order.forEach(cat => {
                 if (groups[cat] && groups[cat].length > 0) {
                     const card = document.createElement('div');
                     card.className = 'category-card';
-
                     let html = `<div class="cat-title">${this.categories[cat]}</div><div>`;
-
                     groups[cat].forEach(item => {
-                        // المقارنة دائماً كنصوص
                         const isChecked = this.state.checked.includes(String(item.id));
-
                         html += `
                         <div class="item ${isChecked ? 'checked' : ''}" onclick="app.toggle('${item.id}')">
                             <div class="checkbox"></div>
                             <span style="flex:1; margin-right:12px; font-weight:500;">${item.name}</span>
-                            ${String(item.id).startsWith('c_') ?
-                            `<span class="del-btn" onclick="app.removeCustom(event, '${item.id}')">×</span>` : ''}
+                            ${String(item.id).startsWith('c_') ? `<span class="del-btn" onclick="app.removeCustom(event, '${item.id}')">×</span>` : ''}
                         </div>`;
                     });
-
                     html += `</div>`;
                     card.innerHTML = html;
                     container.appendChild(card);
@@ -456,23 +473,18 @@
             const total = items.length;
             const checkedCount = items.filter(i => this.state.checked.includes(String(i.id))).length;
             const percent = total === 0 ? 0 : Math.round((checkedCount / total) * 100);
-
             const bar = document.getElementById('progressBar');
             bar.style.width = percent + '%';
             bar.style.backgroundColor = percent === 100 ? '#10B981' : '#d68c45';
-
             document.getElementById('itemsCount').textContent = `${checkedCount}/${total}`;
             document.getElementById('progressText').textContent = percent === 100 ? 'جاهز للانطلاق!' : 'حالة التجهيز';
         },
 
-        // توليد النص (تم إصلاح الخطأ هنا أيضاً)
         generateText: function() {
             const date = document.getElementById('tripDate').value;
             const time = document.getElementById('tripTime').value;
             const loc = document.getElementById('tripLoc').value;
-
             let text = `*⛺ زهاب (Zahab) - قائمة الرحلة*\n`;
-
             if(date || time || loc) {
                 text += `────────────────\n`;
                 if(date) text += `📅 التاريخ: ${date}\n`;
@@ -480,31 +492,24 @@
                 if(loc) text += `📍 الموقع: ${loc}\n`;
             }
             text += `────────────────\n`;
-
             const items = this.getVisibleItems();
             const groups = {};
             items.forEach(item => { if(!groups[item.cat]) groups[item.cat]=[]; groups[item.cat].push(item); });
             const order = ['coffee', 'cooking', 'grill', 'sleep', 'hygiene', 'car', 'winter', 'custom'];
-
             let hasItems = false;
             order.forEach(cat => {
                 if(groups[cat]) {
                     hasItems = true;
                     text += `*${this.categories[cat]}:*\n`;
                     groups[cat].forEach(i => {
-                        // الإصلاح الجذري: مقارنة نصوص بنصوص
                         const isChecked = this.state.checked.includes(String(i.id));
                         text += isChecked ? `✅ ~${i.name}~\n` : `⬜ ${i.name}\n`;
                     });
                     text += `\n`;
                 }
             });
-
             if(!hasItems) text += "لم يتم تحديد أغراض.\n";
-
-            text += `────────────────\n`;
-            text += `توضيح الرموز:\n✅ زهابنا (جاهز)\n⬜ مطلوب (ناقص)\n\n`;
-            text += `تم الإنشاء عبر تطبيق: زهاب`;
+            text += `────────────────\nتوضيح الرموز:\n✅ زهابنا (جاهز)\n⬜ مطلوب (ناقص)\n\nتم الإنشاء عبر تطبيق: زهاب`;
             return text;
         },
 
